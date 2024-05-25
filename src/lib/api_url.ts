@@ -1,1 +1,1 @@
-export const API_URL = "http://localhost:4445"
+export const API_URL = "https://music-store-backend.onrender.com/"
