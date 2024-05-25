@@ -1,4 +1,4 @@
-import { IProduct, IProductInCart } from "./product.interface";
+import { IProduct } from "./product.interface";
 import { IUser } from "./user.interface";
 
 export interface IPurchase {

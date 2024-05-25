@@ -3,16 +3,9 @@ import { CatalogGrid } from "@/components/pages/catalog-components/catalog-grid"
 import { Categories } from "@/components/pages/catalog-components/categories";
 import { FilterForm } from "@/components/pages/catalog-components/filter-form";
 import { Header } from "@/components/pages/header";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "@/components/ui/carousel";
+
 import { ICategory } from "@/interfaces/category.interface";
 import { IProduct } from "@/interfaces/product.interface";
-import { API_URL } from "@/lib/api_url";
 import { CategoryService } from "@/service/category.service";
 import { ProductService } from "@/service/product.service";
 import { createFileRoute } from "@tanstack/react-router";
@@ -69,7 +62,7 @@ function Index() {
     const [products, setProducts] = useState<IProduct[]>();
     const [categories, setCategories] = useState<ICategory[]>();
 
-    const { category, subcategory } = Route.useSearch();
+    const { subcategory } = Route.useSearch();
 
     async function getAllProducts() {
         let data: IProduct[] = await ProductService.getAll();

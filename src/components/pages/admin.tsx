@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ProductCreate } from "./admin-components/product-create";
 import { ProductList } from "./admin-components/product-control";
 import { IProduct } from "@/interfaces/product.interface";
 import { ProductService } from "@/service/product.service";
@@ -21,7 +20,7 @@ export function Admin() {
     const [banners, setBanners] = useState<IBanner[]>();
     const [disconts, setDiscounts] = useState<IDiscount[]>();
     const [purchases, setPurchases] = useState<IPurchase[]>();
-    const [targetNames, setTargetNames] = useState<string[]>();
+    
 
     async function getAllProducts() {
         let data: IProduct[] = await ProductService.getAll();

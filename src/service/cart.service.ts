@@ -1,6 +1,5 @@
 import { IProduct } from "@/interfaces/product.interface";
 import { ICartProduct } from "@/interfaces/purchase.interface";
-import { count } from "console";
 import { toast } from "sonner";
 
 export const CartService = {

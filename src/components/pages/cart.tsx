@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { ShoppingCart } from "lucide-react";
+import { useEffect, useState } from "react";
 import { CartService, setCount } from "@/service/cart.service";
 import { API_URL } from "@/lib/api_url";
 import { toCurrency } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { IProduct } from "@/interfaces/product.interface";
 import { ICartProduct } from "@/interfaces/purchase.interface";
 import { Link } from "@tanstack/react-router";
 import { Card } from "../ui/card";

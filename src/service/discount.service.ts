@@ -1,6 +1,5 @@
 import { IDiscount, INewDiscount } from "@/interfaces/discount.interface";
-import { FileService } from "./file.service";
-import axios, { Axios, AxiosError, AxiosResponse } from "axios";
+import axios, {  AxiosError, AxiosResponse } from "axios";
 import { API_URL } from "@/lib/api_url";
 import { UserService } from "./user.service";
 

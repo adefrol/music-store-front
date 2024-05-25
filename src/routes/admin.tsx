@@ -1,6 +1,6 @@
 import { Admin } from "@/components/pages/admin";
 import { UserService } from "@/service/user.service";
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin")({
     beforeLoad: async({ location }) => {

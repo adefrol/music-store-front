@@ -1,5 +1,5 @@
-import { IProduct } from "./product.interface";
-import { IPurchase, IPurchaseDetails } from "./purchase.interface";
+import {  } from "./product.interface";
+import { IPurchase,  } from "./purchase.interface";
 
 export interface IUser {
     id?: string | number;

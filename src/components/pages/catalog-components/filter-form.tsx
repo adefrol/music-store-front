@@ -10,11 +10,8 @@ import {
 } from "@/components/ui/select";
 import { ICategory } from "@/interfaces/category.interface";
 import {
-    IDrumsParams,
     IDrumsParamsValues,
-    IGuitarParams,
     IGuitarParamsValues,
-    IPianoParams,
     IPianoParamsValues,
 } from "@/interfaces/extra_params.interface";
 import { subcategories } from "@/lib/extra-values";

@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { IDiscount } from "@/interfaces/discount.interface";
-import { BannerCreate } from "./banner-create";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Table,

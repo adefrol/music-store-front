@@ -2,7 +2,6 @@ import { AuthAdmin } from "@/providers/auth";
 import { Link } from "@tanstack/react-router";
 import { Heart, ShoppingCart, User } from "lucide-react";
 import { Cart } from "./cart";
-import { CartService } from "@/service/cart.service";
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 export const Header = ({ forAdmin }: { forAdmin?: boolean }) => {

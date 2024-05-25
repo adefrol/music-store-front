@@ -1,4 +1,3 @@
-import { AuthService } from '@/service/auth.service'
 import React, { useEffect, useState } from 'react'
 import { ErrorComponent } from '../components/error/error'
 import { UserService } from '@/service/user.service'
