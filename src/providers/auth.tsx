@@ -35,7 +35,7 @@ export const AuthLogged = ({children, withError, deAuth} : {children : React.Rea
 
   if(deAuth) {
     return (
-      <>{!isAuth ? <>{children}</> : <></>}</>
+      <>{!isAuth ? <>{children}</> : <>aboba</>}</>
     )
   }
   else {
