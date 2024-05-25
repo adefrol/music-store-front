@@ -14,7 +14,7 @@ import { Header } from "@/components/pages/header";
 import { useState } from "react";
 import { IUser } from "@/interfaces/user.interface";
 import { UserService } from "@/service/user.service";
-import { AuthLogged } from "@/providers/auth";
+/* import { AuthLogged } from "@/providers/auth"; */
 
 export const Route = createFileRoute("/login")({
     beforeLoad: async () => {
