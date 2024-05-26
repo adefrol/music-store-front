@@ -47,7 +47,7 @@ export const BannerControl = ({ banners }: { banners: IBanner[] | null }) => {
                     </DialogContent>
                 </Dialog>
             </CardHeader>
-            <ScrollArea className="max-h-[700px]">
+            <ScrollArea className="h-[700px]">
                 <Table>
                     <TableCaption>Все баннеры</TableCaption>
                     <TableHeader>

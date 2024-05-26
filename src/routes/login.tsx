@@ -14,6 +14,7 @@ import { Header } from "@/components/pages/header";
 import { useState } from "react";
 import { IUser } from "@/interfaces/user.interface";
 import { UserService } from "@/service/user.service";
+import { AuthLogged } from '@/providers/auth'
 /* import { AuthLogged } from "@/providers/auth"; */
 
 export const Route = createFileRoute("/login")({
@@ -65,7 +66,7 @@ function Login() {
     }
 
     return (
-        <>
+        <AuthLogged deAuth>
             <Header />
             <div className="flex justify-center items-center h-[90svh]">
                 <form onSubmit={(e) => handleSubmit(e)}>
@@ -120,6 +121,6 @@ function Login() {
                     </Card>
                 </form>
             </div>
-        </>
+        </AuthLogged>
     );
 }

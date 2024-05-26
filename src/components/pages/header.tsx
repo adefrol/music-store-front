@@ -1,4 +1,4 @@
-/* import { AuthAdmin } from "@/providers/auth"; */
+import { AuthAdmin } from "@/providers/auth";
 import { Link } from "@tanstack/react-router";
 import { Heart, ShoppingCart, User } from "lucide-react";
 import { Cart } from "./cart";
@@ -18,9 +18,9 @@ export const Header = ({ forAdmin }: { forAdmin?: boolean }) => {
                         <a href="">Категории</a>
                         <a href="">Скидки</a>
                         <a href="">О нас</a>
-                        {/* <AuthAdmin> */}
+                        <AuthAdmin>
                             <Link to="/admin">Админ</Link>
-                        {/* </AuthAdmin> */}
+                        </AuthAdmin>
                     </div>
                     {/* <Button variant={"default"}><User/></Button> */}
                     {forAdmin ? (

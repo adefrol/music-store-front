@@ -53,7 +53,7 @@ export const ProductList = ({ products }: { products: IProduct[] | null }) => {
                     </DialogContent>
                 </Dialog>
             </CardHeader>
-            <ScrollArea className="max-h-[700px]">
+            <ScrollArea className="h-[700px]">
                 <Table>
                     <TableCaption>Все продукты</TableCaption>
                     <TableHeader>

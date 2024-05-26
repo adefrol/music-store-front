@@ -49,6 +49,7 @@ export const ProductService = {
             {
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${UserService.getToken()}`
                 },
             }
         );
@@ -56,7 +57,11 @@ export const ProductService = {
     },
 
     async delete(id: number) {
-        const { data } = await axios.delete(`${API_URL}/product/${id}`);
+        const { data } = await axios.delete(`${API_URL}/product/${id}`, {
+            headers : {
+                "Authorization" : `Bearer ${UserService.getToken()}`
+            }
+        });
         return data;
     },
 };

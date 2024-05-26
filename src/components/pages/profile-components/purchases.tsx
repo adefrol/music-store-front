@@ -17,7 +17,7 @@ export const Purchase = ({ profile }: { profile: IUserPurchases }) => {
             <CardHeader className="text-3xl font-bold flex flex-row items-center gap-4">
                 <p>Мои заказы</p>
             </CardHeader>
-            <ScrollArea className="max-h-[700px]">
+            <ScrollArea className="h-[700px]">
                 <Table>
                     <TableCaption>Все заказы</TableCaption>
                     <TableHeader>

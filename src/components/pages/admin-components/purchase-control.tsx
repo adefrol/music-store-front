@@ -40,7 +40,7 @@ export const PurchaseControl = ({
             <CardHeader className="text-3xl font-bold flex flex-row items-center gap-4">
                 <p>Управление заказами</p>
             </CardHeader>
-            <ScrollArea className="max-h-[700px]">
+            <ScrollArea className="h-[700px]">
                 <Table>
                     <TableCaption>Все заказы</TableCaption>
                     <TableHeader>
