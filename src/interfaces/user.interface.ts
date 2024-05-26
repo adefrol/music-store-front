@@ -12,11 +12,12 @@ export interface IUser {
 
 
 export interface IUserPurchases {
-    id: number;
-    payType: string;
-    status: string;
-    sum: number;
-    created_at: string;
+    id?: string | number;
+    name?: string;
+    email: string;
+    password: string;
+    phone?: string;
+    address?: string;
     purchases: IPurchase[];
 }
 

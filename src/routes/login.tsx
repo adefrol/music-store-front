@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -14,15 +14,16 @@ import { Header } from "@/components/pages/header";
 import { useState } from "react";
 import { IUser } from "@/interfaces/user.interface";
 import { UserService } from "@/service/user.service";
-import { AuthLogged } from '@/providers/auth'
-/* import { AuthLogged } from "@/providers/auth"; */
 
 export const Route = createFileRoute("/login")({
-    beforeLoad: async () => {
+    /* beforeLoad: async () => {
         if (await UserService.isLogged()) {
             throw redirect({ to: "/" });
         }
-    },
+        else {
+            return
+        }
+    }, */
     validateSearch: (
         search: Record<string, unknown>
     ): { redirect?: string } => {
@@ -66,7 +67,7 @@ function Login() {
     }
 
     return (
-        <AuthLogged deAuth>
+        <>
             <Header />
             <div className="flex justify-center items-center h-[90svh]">
                 <form onSubmit={(e) => handleSubmit(e)}>
@@ -113,14 +114,18 @@ function Login() {
                                 <></>
                             )}
                         </CardContent>
-                        <CardFooter>
+                        <CardFooter className="flex flex-col gap-2">
                             <Button className="w-full" type="submit">
                                 Войти
                             </Button>
+                            <div className="mt-4 text-center text-sm">
+                                Нет аккаунта?{" "}
+                                <Link to="/register" className='text-primary underline'>Зарегистрироваться</Link>
+                            </div>
                         </CardFooter>
                     </Card>
                 </form>
             </div>
-        </AuthLogged>
+        </>
     );
 }

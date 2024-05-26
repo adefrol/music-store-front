@@ -1,6 +1,6 @@
 import { AuthAdmin } from "@/providers/auth";
 import { Link } from "@tanstack/react-router";
-import { Heart, ShoppingCart, User } from "lucide-react";
+import {  ShoppingCart, User } from "lucide-react";
 import { Cart } from "./cart";
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
@@ -38,7 +38,7 @@ export const Header = ({ forAdmin }: { forAdmin?: boolean }) => {
                                     <Cart/>
                                 </PopoverContent>
                             </Popover>
-                            <Heart size={30} />
+                            
                         </div>
                     )}
                 </div>

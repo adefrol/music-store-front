@@ -26,7 +26,7 @@ export const UserService = {
 
     async verifyEmail(email: string, code: string) {
         try {
-            const {data} = await axios.post(
+            const { data } = await axios.post(
                 `${API_URL}/auth/verify?email=${email}&code=${code}`
             );
             console.log(data);
@@ -105,6 +105,9 @@ export const UserService = {
         } catch {
             return null;
         }
+    },
+    deleteToken() {
+        return localStorage.removeItem("token");
     },
 
     setToken(token: string) {

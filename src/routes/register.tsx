@@ -195,7 +195,7 @@ function Register() {
                             </div>
                             <div className="mt-4 text-center text-sm">
                                 Уже зарегистрированы?{" "}
-                                <Link to="/login" className="underline">
+                                <Link to="/login" className="underline text-primary">
                                     Войти
                                 </Link>
                             </div>

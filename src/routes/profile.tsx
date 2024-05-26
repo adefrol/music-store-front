@@ -1,5 +1,6 @@
 import { Header } from "@/components/pages/header";
-import { Purchase } from '@/components/pages/profile-components/purchases'
+import { Purchase } from "@/components/pages/profile-components/purchases";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { IUserPurchases } from "@/interfaces/user.interface";
@@ -25,14 +26,16 @@ export const Route = createFileRoute("/profile")({
 function Profile() {
     const [profile, setProfile] = useState<IUserPurchases>();
 
+    const navigate = Route.useNavigate();
+
     async function getProfileAndPurchases() {
         const data = await UserService.getPurchases();
         setProfile(data);
     }
 
-    useEffect(()=> {
-        getProfileAndPurchases()
-    },[])
+    useEffect(() => {
+        getProfileAndPurchases();
+    }, []);
 
     return (
         <>
@@ -46,21 +49,31 @@ function Profile() {
                         <div className="flex flex-col gap-4">
                             <div className="flex flex-col">
                                 <Label>Имя</Label>
-                                <Input defaultValue={"sdasd"} readOnly />
+                                <Input defaultValue={profile?.name} readOnly />
                             </div>
                             <div className="flex flex-col">
                                 <Label>Email</Label>
-                                <Input defaultValue={"sdasd"} readOnly />
+                                <Input defaultValue={profile?.email} readOnly />
                             </div>
                             <div className="flex flex-col">
                                 <Label>Пароль</Label>
                                 <Input
                                     type="password"
-                                    defaultValue={"f"}
+                                    defaultValue={"........"}
                                     readOnly
                                 />
                             </div>
-                            {profile ? <Purchase profile={profile}/> : <></>}
+                            <div className="flex justify-end">
+                                <Button
+                                    onClick={() => {
+                                        UserService.deleteToken();
+                                        navigate({ to: "/" });
+                                    }}
+                                >
+                                    Выйти
+                                </Button>
+                            </div>
+                            {profile ? <Purchase profile={profile} /> : <></>}
                         </div>
                     </CardContent>
                 </Card>

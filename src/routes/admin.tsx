@@ -12,6 +12,9 @@ export const Route = createFileRoute("/admin")({
                 },
             });
         }
+        else {
+            return
+        }
     },
     component: Admin,
     

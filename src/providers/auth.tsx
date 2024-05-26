@@ -24,9 +24,12 @@ export const AuthLogged = ({children, withError, deAuth} : {children : React.Rea
 
   const [isAuth, setIsAuth] = useState<boolean | undefined>(false)
 
+  const [counter, setCounter] = useState(0)
+
   async function checkAuth() {
       const data = await UserService.isLogged()
       setIsAuth(data)
+      setCounter(counter + 1)
   }
 
   useEffect(() => {
@@ -35,7 +38,7 @@ export const AuthLogged = ({children, withError, deAuth} : {children : React.Rea
 
   if(deAuth) {
     return (
-      <>{!isAuth ? <>{children}</> : <>aboba</>}</>
+      <>{!isAuth ? <div key={counter}>{children}</div> : <>aboba</>}</>
     )
   }
   else {
