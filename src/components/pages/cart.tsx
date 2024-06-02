@@ -31,6 +31,9 @@ export const Cart = () => {
     useEffect(() => {
         setCart(CartService.getCart());
     }, []);
+
+    if(cart?.length == 0) return (<p>Корзина пуста!</p>)
+
     return (
         <>
             {cart?.map((product) => (

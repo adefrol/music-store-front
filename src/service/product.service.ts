@@ -3,7 +3,7 @@ import { FileService } from "./file.service";
 import axios from "axios";
 import { API_URL } from "@/lib/api_url";
 import { UserService } from './user.service'
-
+axios.defaults.headers.common['ngrok-skip-browser-warning'] = '69420'
 export const ProductService = {
     async create(orderData: IProductCreate, folder?: string, file?: File) {
         let fileName: string = "";

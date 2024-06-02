@@ -4,6 +4,8 @@ import axios from "axios";
 import { UserService } from "./user.service";
 import { FileService } from "./file.service";
 
+axios.defaults.headers.common['ngrok-skip-browser-warning'] = '69420'
+
 export const BannerService = {
     async getAll() {
         const { data } = await axios.get<IBanner[]>(`${API_URL}/banner`);

@@ -44,7 +44,7 @@ export const FilterForm = ({
         setSelectedSubCategory(subcategoriesParams?.extra_params);
     }
 
-    const [keyHandle, setKeyHandle] = useState<number>(0)
+    const [keyHandle, setKeyHandle] = useState<number>(0);
 
     const [filters, setFilters] = useState<ProductSearch>();
 
@@ -76,7 +76,6 @@ export const FilterForm = ({
         }
     }
 
-
     useEffect(() => {
         setFilters({ category: category, subcategory: subcategory });
     }, [searchParams]);
@@ -84,7 +83,7 @@ export const FilterForm = ({
     useEffect(() => {
         findCategory();
         navigate({ search: { category: category, subcategory: subcategory } });
-        setKeyHandle(keyHandle + 1)
+        setKeyHandle(keyHandle + 1);
     }, [subcategory]);
 
     return (
@@ -113,7 +112,8 @@ export const FilterForm = ({
 
                     <div className="flex flex-col space-y-1.5">
                         <Label htmlFor="min">
-                            Максимальная цена - {filters ? filters.max ? filters.max : max : max}
+                            Максимальная цена -{" "}
+                            {filters ? (filters.max ? filters.max : max) : max}
                         </Label>
                         <Slider
                             step={100}
@@ -202,7 +202,7 @@ export const FilterForm = ({
                                             subcategory: subcategory,
                                         }),
                                     });
-                                    setKeyHandle(keyHandle + 1)
+                                    setKeyHandle(keyHandle + 1);
                                 }
                             }}
                         >

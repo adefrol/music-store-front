@@ -2,6 +2,8 @@ import { IProduct } from "@/interfaces/product.interface";
 import { ICartProduct } from "@/interfaces/purchase.interface";
 import { toast } from "sonner";
 
+
+
 export const CartService = {
     addToCart(product: IProduct) {
         const productToAdd: ICartProduct = { product: product, count: 1 };

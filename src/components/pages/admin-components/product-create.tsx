@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Select,
     SelectContent,
@@ -49,7 +50,14 @@ export const ProductCreate = ({
 
     const [newProduct, setNewProduct] = useState<IProductCreate>();
 
-    const [productUpdate, setProductUpdate] = useState({...product, brand: product?.brand.id, category: product?.category.id, created_at: undefined, deleted_at: undefined, updated_at: undefined, });
+    const [productUpdate, setProductUpdate] = useState({
+        ...product,
+        brand: product?.brand.id,
+        category: product?.category.id,
+        created_at: undefined,
+        deleted_at: undefined,
+        updated_at: undefined,
+    });
 
     const [file, setFile] = useState<File>();
 
@@ -115,15 +123,14 @@ export const ProductCreate = ({
                 );
             }
         }
-        window.location.reload()
+        window.location.reload();
     }
 
     function handleChange(value: string | number, key: string) {
-        if(product) {
-            setProductUpdate({...productUpdate, [key] : value})
-        }
-        else {
-            setNewProduct({...newProduct, [key] : value})
+        if (product) {
+            setProductUpdate({ ...productUpdate, [key]: value });
+        } else {
+            setNewProduct({ ...newProduct, [key]: value });
         }
     }
 
@@ -131,175 +138,200 @@ export const ProductCreate = ({
         <div>
             <form onSubmit={(e) => handleCreate(e)}>
                 <Card className={"w-full border-0"}>
-                    <CardHeader>
-                        <h1 className="font-bold text-xl">
-                            {forEdit ? "Изменение товара" : "Создание товара"}
-                        </h1>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="flex flex-col gap-4">
-                            <div className="">
-                                <Label>Категория</Label>
-                                <Select
-                                    defaultValue={
-                                        product
-                                            ? product.category.id.toString()
-                                            : undefined
-                                    }
-                                    onValueChange={(value) => {
-                                        handleChange(Number(value), "category")
-                                        setSelectedCategory(
-                                            categories?.find(
-                                                (category) =>
-                                                    category.id == Number(value)
-                                            )
-                                        );
-                                    }}
-                                >
-                                    <SelectTrigger className="">
-                                        <SelectValue placeholder="Категория" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <Input />
-                                        {categories?.map((category) => (
-                                            <SelectItem
-                                                value={category.id.toString()}
-                                            >
-                                                {category.name} -{" "}
-                                                {category.subcategory}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div className="">
-                                <Label>Бренд</Label>
-                                <Select
-                                    defaultValue={
-                                        product
-                                            ? product.brand.id.toString()
-                                            : undefined
-                                    }
-                                    disabled={
-                                        newProduct?.category
-                                            ? product
-                                                ? true
-                                                : false
-                                            : false
-                                    }
-                                    onValueChange={(value) => {
-                                        handleChange(Number(value), "brand")
-                                    }}
-                                >
-                                    <SelectTrigger className="">
-                                        <SelectValue placeholder="Бренд" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <Input />
-                                        {categories ? (
-                                            product ? (
-                                                categories
-                                                    .find(
-                                                        (category) =>
-                                                            category.id ==
-                                                            product.category.id
-                                                    )
-                                                    ?.brands.map((brand) => (
-                                                        <SelectItem
-                                                            value={brand.id.toString()}
-                                                        >
-                                                            {brand.name}
-                                                        </SelectItem>
-                                                    ))
-                                            ) : (
-                                                categories
-                                                    .find(
-                                                        (category) =>
-                                                            category.id ==
-                                                            newProduct?.category
-                                                    )
-                                                    ?.brands.map((brand) => (
-                                                        <SelectItem
-                                                            value={brand.id.toString()}
-                                                        >
-                                                            {brand.name}
-                                                        </SelectItem>
-                                                    ))
-                                            )
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div className="">
-                                <Label>Модель</Label>
-                                <Input
-                                    defaultValue={
-                                        product ? product.model : undefined
-                                    }
-                                    placeholder="Модель"
-                                    onChange={(e) =>
-                                        handleChange(e.target.value, "model")
-                                    }
-                                />
-                            </div>
-                            <div className="">
-                                <Label>Стоимость</Label>
-                                <Input
-                                    defaultValue={
-                                        product ? product.price : undefined
-                                    }
-                                    type="number"
-                                    placeholder="Стоимость"
-                                    onChange={(e) =>
-                                        handleChange(e.target.value, "price")
-                                    }
-                                />
-                            </div>
-                            <div className="">
-                                <Label>Описание</Label>
-                                <Textarea
-                                    defaultValue={
-                                        product
-                                            ? product.description
-                                            : undefined
-                                    }
-                                    placeholder="Описание"
-                                    onChange={(e) =>
-                                        handleChange(e.target.value, "description")
-                                    }
-                                />
-                            </div>
-                            <div className="">
-                                <Label>Картинка</Label>
-                                <Input
-                                    type="file"
-                                    onChange={(e) =>
-                                        setFile(
-                                            e.target.files
-                                                ? e.target.files[0]
+                    <ScrollArea className="h-[800px]">
+                        <CardHeader>
+                            <h1 className="font-bold text-xl">
+                                {forEdit
+                                    ? "Изменение товара"
+                                    : "Создание товара"}
+                            </h1>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex flex-col gap-4">
+                                <div className="">
+                                    <Label>Категория</Label>
+                                    <Select
+                                        defaultValue={
+                                            product
+                                                ? product.category.id.toString()
                                                 : undefined
-                                        )
+                                        }
+                                        onValueChange={(value) => {
+                                            handleChange(
+                                                Number(value),
+                                                "category"
+                                            );
+                                            setSelectedCategory(
+                                                categories?.find(
+                                                    (category) =>
+                                                        category.id ==
+                                                        Number(value)
+                                                )
+                                            );
+                                        }}
+                                    >
+                                        <SelectTrigger className="">
+                                            <SelectValue placeholder="Категория" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <Input />
+                                            {categories?.map((category) => (
+                                                <SelectItem
+                                                    value={category.id.toString()}
+                                                >
+                                                    {category.name} -{" "}
+                                                    {category.subcategory}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="">
+                                    <Label>Бренд</Label>
+                                    <Select
+                                        defaultValue={
+                                            product
+                                                ? product.brand.id.toString()
+                                                : undefined
+                                        }
+                                        disabled={
+                                            newProduct?.category
+                                                ? product
+                                                    ? true
+                                                    : false
+                                                : false
+                                        }
+                                        onValueChange={(value) => {
+                                            handleChange(
+                                                Number(value),
+                                                "brand"
+                                            );
+                                        }}
+                                    >
+                                        <SelectTrigger className="">
+                                            <SelectValue placeholder="Бренд" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <Input />
+                                            {categories ? (
+                                                product ? (
+                                                    categories
+                                                        .find(
+                                                            (category) =>
+                                                                category.id ==
+                                                                product.category
+                                                                    .id
+                                                        )
+                                                        ?.brands.map(
+                                                            (brand) => (
+                                                                <SelectItem
+                                                                    value={brand.id.toString()}
+                                                                >
+                                                                    {brand.name}
+                                                                </SelectItem>
+                                                            )
+                                                        )
+                                                ) : (
+                                                    categories
+                                                        .find(
+                                                            (category) =>
+                                                                category.id ==
+                                                                newProduct?.category
+                                                        )
+                                                        ?.brands.map(
+                                                            (brand) => (
+                                                                <SelectItem
+                                                                    value={brand.id.toString()}
+                                                                >
+                                                                    {brand.name}
+                                                                </SelectItem>
+                                                            )
+                                                        )
+                                                )
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="">
+                                    <Label>Модель</Label>
+                                    <Input
+                                        defaultValue={
+                                            product ? product.model : undefined
+                                        }
+                                        placeholder="Модель"
+                                        onChange={(e) =>
+                                            handleChange(
+                                                e.target.value,
+                                                "model"
+                                            )
+                                        }
+                                    />
+                                </div>
+                                <div className="">
+                                    <Label>Стоимость</Label>
+                                    <Input
+                                        defaultValue={
+                                            product ? product.price : undefined
+                                        }
+                                        type="number"
+                                        placeholder="Стоимость"
+                                        onChange={(e) =>
+                                            handleChange(
+                                                e.target.value,
+                                                "price"
+                                            )
+                                        }
+                                    />
+                                </div>
+                                <div className="">
+                                    <Label>Описание</Label>
+                                    <Textarea
+                                        defaultValue={
+                                            product
+                                                ? product.description
+                                                : undefined
+                                        }
+                                        placeholder="Описание"
+                                        onChange={(e) =>
+                                            handleChange(
+                                                e.target.value,
+                                                "description"
+                                            )
+                                        }
+                                    />
+                                </div>
+                                <div className="">
+                                    <Label>Картинка</Label>
+                                    <Input
+                                        type="file"
+                                        onChange={(e) =>
+                                            setFile(
+                                                e.target.files
+                                                    ? e.target.files[0]
+                                                    : undefined
+                                            )
+                                        }
+                                    />
+                                </div>
+                                <ParamsForm
+                                    passData={getExtraData}
+                                    paramsData={
+                                        selectedSubCategory
+                                            ? selectedSubCategory
+                                            : undefined
                                     }
+                                    selectedParams={product?.extra_parameters}
                                 />
                             </div>
-                            <ParamsForm
-                                passData={getExtraData}
-                                paramsData={
-                                    selectedSubCategory
-                                        ? selectedSubCategory
-                                        : undefined
-                                }
-                                selectedParams={product?.extra_parameters}
-                            />
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <Button type="submit">
-                            {product ? "Изменить" : "Создать"}
-                        </Button>
-                    </CardFooter>
+                        </CardContent>
+                        <CardFooter>
+                            <Button type="submit">
+                                {product ? "Изменить" : "Создать"}
+                            </Button>
+                        </CardFooter>
+                    </ScrollArea>
                 </Card>
             </form>
         </div>

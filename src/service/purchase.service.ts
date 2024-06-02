@@ -6,7 +6,7 @@ import {
 import { API_URL } from "@/lib/api_url";
 import axios from "axios";
 import { UserService } from "./user.service";
-
+axios.defaults.headers.common['ngrok-skip-browser-warning'] = '69420'
 export const PurchaseService = {
     async create(purchaseData: INewPurchase) {
         const { data } = await axios.post(

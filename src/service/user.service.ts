@@ -1,7 +1,7 @@
 import { IUser, IUserPurchases } from "@/interfaces/user.interface";
 import { API_URL } from "@/lib/api_url";
 import axios, { AxiosError, AxiosResponse } from "axios";
-
+axios.defaults.headers.common["ngrok-skip-browser-warning"] = "69420";
 export const UserService = {
     async register(regData: IUser) {
         try {

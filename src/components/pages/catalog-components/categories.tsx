@@ -16,54 +16,50 @@ const categoriesCards = [
         name: "Ударные",
         image: "drum-category.jpg",
     },
+];
+
+const guitarCategories = [
+    {
+        name: "Акустические",
+        image: "acoustic-guitar-category.jpg",
+    },
+    {
+        name: "Электрогитары",
+        image: "electric-guitar-category.jpg",
+    },
     {
         name: "Аксессуары",
         image: "accessories-category.jpg",
     },
 ];
 
-const guitarCategories = [
-    {
-        name: "Акустические",
-        image: "guitar-category.jpg",
-    },
-    {
-        name: "Электрогитары",
-        image: "piano-category.jpg",
-    },
-    {
-        name: "Аксессуары",
-        image: "drum-category.jpg",
-    },
-];
-
 const pianoCategories = [
     {
         name: "Фортепиано",
-        image: "guitar-category.jpg",
+        image: "fortepiano-category.jpg",
     },
     {
         name: "Синтезаторы",
-        image: "piano-category.jpg",
+        image: "syntesizer-category.jpg",
     },
     {
         name: "Аксессуары",
-        image: "drum-category.jpg",
+        image: "piano-access-category.jpg",
     },
 ];
 
 const drumsCategories = [
     {
         name: "Барабаны",
-        image: "guitar-category.jpg",
+        image: "drums-category.jpg",
     },
     {
         name: "Тарелки",
-        image: "piano-category.jpg",
+        image: "cymbal-category.jpg",
     },
     {
         name: "Аксессуары",
-        image: "drum-category.jpg",
+        image: "drum-access-category.jpg",
     },
 ];
 
@@ -95,7 +91,7 @@ export const Categories = () => {
     return (
         <>
             <div className="flex flex-col justify-center gap-5">
-                <div className="grid grid-cols-4 font-medium">
+                <div className="grid grid-cols-3 font-medium">
                     {categoriesCards.map((category) => (
                         <div
                             key={category.name}
