@@ -67,12 +67,20 @@ function Index() {
     async function getAllProducts() {
         let data: IProduct[] = await ProductService.getAll();
         let parsedData = data.map((product) => {
-            return {
-                ...product,
-                extra_parameters: JSON.parse(
-                    product.extra_parameters.toString()
-                ),
-            };
+            if (product.category.subcategory != "Аксессуары") {
+                return {
+                    ...product,
+                    extra_parameters: JSON.parse(
+                        product.extra_parameters.toString()
+                    ),
+                };
+            }
+            else {
+                return {
+                    ...product,
+                    extra_parameters: {}
+                }
+            }
         });
         setProducts(parsedData);
     }
