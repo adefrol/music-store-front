@@ -14,15 +14,20 @@ import { BrandService } from "@/service/brand.service";
 import { PurchaseService } from "@/service/purchase.service";
 import { IPurchase } from "@/interfaces/purchase.interface";
 import { PurchaseControl } from "./admin-components/purchase-control";
+import { Loading } from "../loading";
+import { Link } from "@tanstack/react-router";
 
 export function Admin() {
     const [products, setProducts] = useState<IProduct[]>();
     const [banners, setBanners] = useState<IBanner[]>();
     const [disconts, setDiscounts] = useState<IDiscount[]>();
     const [purchases, setPurchases] = useState<IPurchase[]>();
-    
+
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     async function getAllProducts() {
+        setLoading(true);
         let data: IProduct[] = await ProductService.getAll();
         let parsedData = data.map((product) => {
             if (product.category.subcategory != "Аксессуары") {
@@ -32,27 +37,30 @@ export function Admin() {
                         product.extra_parameters.toString()
                     ),
                 };
-            }
-            else {
+            } else {
                 return {
                     ...product,
-                    extra_parameters: {}
-                }
+                    extra_parameters: {},
+                };
             }
         });
         setProducts(parsedData);
+        setLoading(false);
     }
     async function getAllBanners() {
+        setLoading(true);
         const data: IBanner[] = (await BannerService.getAll()).sort((a, b) => {
             return (
                 new Date(a.expired_at).getTime() -
                 new Date(b.expired_at).getTime()
             );
         });
+        setLoading(false);
         setBanners(data);
     }
 
     async function getAllDisconts() {
+        setLoading(true);
         const data: IDiscount[] = (await DiscountService.getAll()).sort(
             (a, b) => {
                 return (
@@ -61,10 +69,12 @@ export function Admin() {
                 );
             }
         );
+        setLoading(false);
         return data;
     }
 
     async function getAllPurchases() {
+        setLoading(true);
         const data: IPurchase[] = (await PurchaseService.getAll()).sort(
             (a, b) => {
                 return (
@@ -73,6 +83,7 @@ export function Admin() {
                 );
             }
         );
+        setLoading(false);
         setPurchases(data);
     }
 
@@ -109,10 +120,18 @@ export function Admin() {
         getAllPurchases();
     }, []);
 
+    if (loading) return <Loading />;
+
     return (
         <AuthAdmin withError>
             <div className="max-w-[1500px] w-full mx-auto">
-                {/* <ProductCreate /> */}
+                <div className="flex justify-center py-5">
+                    <Link to="/">
+                        <div className="text-3xl font-bold">
+                            Music <span className="text-primary">Store</span>
+                        </div>
+                    </Link>
+                </div>
                 <ProductList products={products ? products : null} />
                 <BannerControl banners={banners ? banners : null} />
                 <DiscountControl discounts={disconts ? disconts : null} />

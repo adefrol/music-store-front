@@ -32,7 +32,28 @@ export const Cart = () => {
         setCart(CartService.getCart());
     }, []);
 
-    if(cart?.length == 0) return (<p>Корзина пуста!</p>)
+    function priceSum() {
+        const sum = cart?.reduce((accumulator, object) => {
+            if (object.product.discount) {
+                return (
+                    accumulator +
+                    Math.round(
+                        (Number(object.product.price) /
+                            (object.product.discount.discount_value / 100 +
+                                1)) *
+                            object.count
+                    )
+                );
+            } else {
+                return (
+                    accumulator + Number(object.product.price) * object.count
+                );
+            }
+        }, 0);
+        return sum;
+    }
+
+    if (cart?.length == 0) return <p>Корзина пуста!</p>;
 
     return (
         <>
@@ -56,7 +77,8 @@ export const Cart = () => {
                                 {product.product.discount ? (
                                     <p className="text-lg roboto line-through text-primary">
                                         {toCurrency(
-                                            Number(product.product.price) * product.count
+                                            Number(product.product.price) *
+                                                product.count
                                         )}
                                     </p>
                                 ) : (
@@ -79,7 +101,8 @@ export const Cart = () => {
                                               ) * product.count
                                           )
                                         : toCurrency(
-                                              Number(product.product.price) * product.count
+                                              Number(product.product.price) *
+                                                  product.count
                                           )}
                                 </p>
                             </div>
@@ -112,10 +135,13 @@ export const Cart = () => {
                     </div>
                 </Card>
             ))}
-            <div className="flex justify-end">
-                <Link to="/checkout">
-                    <Button>Оформить заказ</Button>
-                </Link>
+            <div className="flex justify-between    ">
+                <div className="flex text-3xl font-bold">Итого: {toCurrency(Number(priceSum()))}</div>
+                <div className="flex justify-end">
+                    <Link to="/checkout">
+                        <Button>Оформить заказ</Button>
+                    </Link>
+                </div>
             </div>
         </>
     );

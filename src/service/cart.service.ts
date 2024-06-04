@@ -24,6 +24,7 @@ export const CartService = {
                 toast("Вы уже добавили товар");
             } else {
                 parsedCart.push(productToAdd);
+                toast("Вы добавили товар в корзину")
                 localStorage.setItem("cart", JSON.stringify(parsedCart));
             }
         } else {

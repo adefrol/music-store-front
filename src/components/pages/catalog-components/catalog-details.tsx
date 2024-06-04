@@ -47,7 +47,6 @@ export const CatalogDetails = ({ product }: { product: IProduct }) => {
                             <Badge>
                                 Скидка {product.discount.discount_value}%
                             </Badge>
-                            <Badge variant={"destructive"}>Новинка</Badge>
                         </div>
                     </div>
                 ) : (
@@ -102,9 +101,6 @@ export const CatalogDetails = ({ product }: { product: IProduct }) => {
                                 {productInCart
                                     ? "Товар в корзине"
                                     : "Добавить в корзину"}
-                            </Button>
-                            <Button variant={"destructive"}>
-                                Добавить в избранное
                             </Button>
                         </div>
                         <ScrollArea className="h-full">

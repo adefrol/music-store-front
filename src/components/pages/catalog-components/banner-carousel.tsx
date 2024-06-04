@@ -46,10 +46,8 @@ export const BannerCarousel = () => {
                         <p className="text-white text-7xl font-bold">
                             Music <span className="text-primary">Store</span>
                         </p>
-                        <p className="text-white text-xl text-justify w-96">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Fuga architecto corporis ab voluptates,
-                            voluptatem sequi doloremque eos beatae blanditiis
+                        <p className="text-white text-xl text-center w-[500px]">
+                            Добро пожаловать в магазин музыкального оборудования! Здесь каждая нота звучит особенно, а любимая мелодия заводит сердце! Давай вместе погрузимся в мир музыки и создадим что-то по-настоящему удивительное!
                         </p>
                     </div>
                 </CarouselItem>

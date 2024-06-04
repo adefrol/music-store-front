@@ -1,3 +1,4 @@
+import { Loading } from "@/components/loading";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -22,35 +23,45 @@ import { BrandService } from "@/service/brand.service";
 import { CategoryService } from "@/service/category.service";
 import { DiscountService } from "@/service/discount.service";
 import React, { useEffect, useState } from "react";
+import { toast } from 'sonner'
 
 export const DiscountCreate = ({ product }: { product?: IProduct }) => {
-    const [newDiscount, setNewDiscount] = useState<INewDiscount | null>(product ? {target: product.id, type: 'one'} : null);
+    const [newDiscount, setNewDiscount] = useState<INewDiscount | null>(
+        product ? { target: product.id, type: "one" } : null
+    );
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [categories, setCategories] = useState<ICategory[]>();
     const [brands, setBrands] = useState<IBrand[]>();
 
     async function getCategoriesBrands() {
+        setLoading(true);
         const categoriesData = await CategoryService.getAll();
         const brandsData = await BrandService.getAll();
 
+        setLoading(false);
         setBrands(brandsData);
         setCategories(categoriesData);
     }
 
     async function handleCreate(e: React.SyntheticEvent) {
         e.preventDefault();
-
+        setLoading(true);
         try {
             if (newDiscount) {
                 const data = await DiscountService.create(newDiscount);
                 if (data == 404) {
-                    alert("Нет товаров для скидки");
+                    toast("Нет товаров для скидки");
                 }
-                /* window.location.reload() */
+                localStorage.removeItem("cart")
+                window.location.reload()
             }
         } catch (e) {
             console.log(e);
         }
+        
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -112,6 +123,8 @@ export const DiscountCreate = ({ product }: { product?: IProduct }) => {
         }
     }
 
+    if (loading) return <Loading />;
+
     return (
         <div>
             <div>
@@ -125,8 +138,9 @@ export const DiscountCreate = ({ product }: { product?: IProduct }) => {
                         <CardContent>
                             <div className="flex flex-col gap-4">
                                 {product ? (
-                                    <div className=''>
-                                        Скидка для {`${product.brand.name} ${product.model}`}
+                                    <div className="">
+                                        Скидка для{" "}
+                                        {`${product.brand.name} ${product.model}`}
                                     </div>
                                 ) : (
                                     <>

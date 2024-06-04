@@ -1,3 +1,4 @@
+import { Footer } from '@/components/footer'
 import { BannerCarousel } from "@/components/pages/catalog-components/banner-carousel";
 import { CatalogGrid } from "@/components/pages/catalog-components/catalog-grid";
 import { Categories } from "@/components/pages/catalog-components/categories";
@@ -131,6 +132,7 @@ function Index() {
                     <></>
                 )}
             </div>
+            <Footer/>
         </>
     );
 }

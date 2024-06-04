@@ -19,7 +19,7 @@ export const Header = ({ forAdmin }: { forAdmin?: boolean }) => {
                         <a href="">Скидки</a>
                         <a href="">О нас</a>
                         <AuthAdmin>
-                            <Link to="/admin">Админ</Link>
+                            <Link to="/admin" className='text-primary'>Админ-панель</Link>
                         </AuthAdmin>
                     </div>
                     {/* <Button variant={"default"}><User/></Button> */}

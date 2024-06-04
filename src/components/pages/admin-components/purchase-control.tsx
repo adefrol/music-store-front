@@ -29,9 +29,11 @@ export const PurchaseControl = ({
 }) => {
     const [statusUpdate, setStatusUpdate] = useState<IStatusUpdate>();
 
+
     async function updateStatus() {
         if (statusUpdate) {
             await PurchaseService.updateStatus(statusUpdate);
+            window.location.reload()
         }
     }
 

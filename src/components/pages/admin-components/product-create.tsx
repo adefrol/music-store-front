@@ -1,3 +1,4 @@
+import { Loading } from '@/components/loading'
 import { ParamsForm } from "@/components/params-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,7 +39,7 @@ export const ProductCreate = ({
 }) => {
     const [categories, setCategories] = useState<ICategory[]>();
 
-    const [_, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [selectedCategory, setSelectedCategory] = useState<
         ICategory | undefined
@@ -96,7 +97,7 @@ export const ProductCreate = ({
 
     async function handleCreate(e: React.BaseSyntheticEvent) {
         e.preventDefault();
-
+        setLoading(true)
         if (newProduct && !product) {
             if (newProduct && file != undefined) {
                 await ProductService.create(
@@ -123,6 +124,8 @@ export const ProductCreate = ({
                 );
             }
         }
+        localStorage.removeItem("cart")
+        setLoading(false)
         window.location.reload();
     }
 
@@ -133,6 +136,8 @@ export const ProductCreate = ({
             setNewProduct({ ...newProduct, [key]: value });
         }
     }
+
+    if(loading) return <Loading/>
 
     return (
         <div>

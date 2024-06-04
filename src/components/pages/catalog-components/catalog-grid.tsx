@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { IProduct } from "@/interfaces/product.interface";
 import { API_URL } from "@/lib/api_url";
-import { Heart, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Route } from "@/routes/index";
 import { useEffect, useState } from "react";
 import { ICategory } from "@/interfaces/category.interface";
@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { CatalogDetails } from "./catalog-details";
 import { toCurrency } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { CartService } from '@/service/cart.service'
 
 export const CatalogGrid = ({
     products,
@@ -125,7 +126,6 @@ export const CatalogGrid = ({
                                 <Badge>
                                     Скидка {product.discount.discount_value}%
                                 </Badge>
-                                <Badge variant={"destructive"}>Новинка</Badge>
                             </div>
                         </div>
                     ) : (
@@ -169,19 +169,18 @@ export const CatalogGrid = ({
                     </div>
                     <div className="opacity-0 top-[50%] absolute w-full px-2 group-hover:opacity-100  transition-all">
                         <div className="grid grid-cols-2 gap-5 w-full h-full">
-                            <Button>
+                            <Button
+                                onClick={() => {
+                                    CartService.addToCart(product);
+                                }}
+                            >
                                 <ShoppingCart />
                             </Button>
-                            <Button>
-                                <Heart />
-                            </Button>
-                        </div>
-                        <div className="pt-5">
                             <Dialog>
                                 <DialogTrigger className="flex justify-center">
                                     <Button
                                         className="w-full"
-                                        variant={"secondary"}
+                                        variant={"default"}
                                     >
                                         Подробнее
                                     </Button>
