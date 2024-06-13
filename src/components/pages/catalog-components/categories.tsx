@@ -148,9 +148,6 @@ export const Categories = () => {
         return (
             <>
                 <div className="flex flex-col justify-center gap-5 py-40">
-                    <h1 className="text-center text-5xl font-extrabold">
-                        Категории
-                    </h1>
                     <div className="grid grid-cols-3 font-medium">
                         {categoriesCards.map((category) => (
                             <div
@@ -198,8 +195,20 @@ export const Categories = () => {
                             </div>
                         ))}
                     </div>
-                    {!category ? <p className='text-center text-xl text-gray-500 font-bold'>Выберите категорию</p> : <></>}
-                    {!subcategory && category ? <p className='text-center text-xl text-gray-500 font-bold'>Выберите подкатегорию</p> : <></>}
+                    {!category ? (
+                        <p className="text-center text-xl text-gray-500 font-bold">
+                            Выберите категорию
+                        </p>
+                    ) : (
+                        <></>
+                    )}
+                    {!subcategory && category ? (
+                        <p className="text-center text-xl text-gray-500 font-bold">
+                            Выберите подкатегорию
+                        </p>
+                    ) : (
+                        <></>
+                    )}
                 </div>
 
                 {/*             <div className="grid grid-cols-2 pt-5 font-medium">
