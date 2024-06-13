@@ -45,6 +45,21 @@ export const UserService = {
         }
     },
 
+    async update(editData: IUser) {
+        try {
+            const data = await axios.post(`${API_URL}/auth/edit`, editData, {
+                headers: {
+                    Authorization: `Bearer ${this.getToken()}`,
+                },
+            });
+
+            return data.status;
+        } catch (e) {
+            const error = e as AxiosError;
+            return { status: Number(error.response?.status) };
+        }
+    },
+
     async login(loginData: IUser) {
         try {
             const { data } = await axios.post(

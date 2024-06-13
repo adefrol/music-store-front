@@ -10,7 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { CatalogDetails } from "./catalog-details";
 import { toCurrency } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { CartService } from '@/service/cart.service'
+import { CartService } from "@/service/cart.service";
+import { useMediaQuery } from "react-responsive";
 
 export const CatalogGrid = ({
     products,
@@ -20,6 +21,8 @@ export const CatalogGrid = ({
     extraParams?: Object;
 }) => {
     const searchParams = Route.useSearch();
+
+    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 800px)" });
 
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>();
 
@@ -37,7 +40,7 @@ export const CatalogGrid = ({
                 }
             }
             if (searchParams.subcategory) {
-                filtered = products?.filter((product) => {
+                filtered = filtered?.filter((product) => {
                     return (
                         product.category.subcategory ==
                             searchParams.subcategory &&
@@ -59,19 +62,24 @@ export const CatalogGrid = ({
             );
             console.log(filtered);
             if (searchParams.brand) {
-                filtered = products?.filter((product) => {
+                filtered = filtered?.filter((product) => {
                     return product.brand.name == searchParams.brand;
                 });
             }
             if (searchParams.search) {
-                filtered = products?.filter((product) => {
-                    if (searchParams.search) {
-                        return product.model.includes(searchParams.search);
-                    }
+                filtered = filtered?.filter((product) => {
+                    return (
+                        product.model
+                            .toLowerCase()
+                            .includes(searchParams.search!.toLowerCase()) ||
+                        product.brand.name
+                            .toLowerCase()
+                            .includes(searchParams.search!.toLowerCase())
+                    );
                 });
             }
             if (searchParams.max) {
-                filtered = products?.filter((product) => {
+                filtered = filtered?.filter((product) => {
                     if (searchParams.max) {
                         return Number(product.price) <= searchParams.max;
                     }
@@ -114,11 +122,14 @@ export const CatalogGrid = ({
         filterByCategory();
     }, []);
     return (
-        <div className="grid grid-cols-3 gap-y-5 relative transition-all">
+        <div
+            className={`grid ${isTabletOrMobile ? "grid-cols-1" : "grid-cols-3"} gap-y-5 relative transition-all`}
+        >
+            
             {filteredProducts?.map((product) => (
                 <Card
                     key={product.id}
-                    className="w-[95%] h-[400px] hover:shadow-2xl group relative transition-all cursor-pointer"
+                    className="w-[95%] animate-in h-[400px] hover:shadow-2xl group relative transition-all cursor-pointer"
                 >
                     {product.discount ? (
                         <div className="p-2 absolute left-0 right-0 z-10">
@@ -133,7 +144,7 @@ export const CatalogGrid = ({
                     )}
                     <div className=" transition-all group-hover:blur-[3px] relative">
                         <div
-                            className="w-[300px] h-[300px] bg-contain bg-no-repeat bg-center rounded-lg"
+                            className="w-[95%] mx-auto h-[300px] bg-contain bg-no-repeat bg-center rounded-lg"
                             style={{
                                 backgroundImage: `url(${API_URL}/${product.image})`,
                             }}

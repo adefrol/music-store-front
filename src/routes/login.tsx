@@ -14,6 +14,8 @@ import { Header } from "@/components/pages/header";
 import { useState } from "react";
 import { IUser } from "@/interfaces/user.interface";
 import { UserService } from "@/service/user.service";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/login")({
     /* beforeLoad: async () => {
@@ -49,7 +51,14 @@ function Login() {
     async function handleSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
 
-        const data = await UserService.login(loginData);
+        const data = await UserService.login(loginData).catch((e) => {
+            const error = e as AxiosError;
+            if (error.response?.status == 500) {
+                toast("Произошла ошибка на сервере");
+
+                return;
+            }
+        });
         console.log(data);
 
         if (data?.status == 200) {
@@ -120,7 +129,12 @@ function Login() {
                             </Button>
                             <div className="mt-4 text-center text-sm">
                                 Нет аккаунта?{" "}
-                                <Link to="/register" className='text-primary underline'>Зарегистрироваться</Link>
+                                <Link
+                                    to="/register"
+                                    className="text-primary underline"
+                                >
+                                    Зарегистрироваться
+                                </Link>
                             </div>
                         </CardFooter>
                     </Card>

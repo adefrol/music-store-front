@@ -22,12 +22,19 @@ import { IProduct } from "@/interfaces/product.interface";
 import { BrandService } from "@/service/brand.service";
 import { CategoryService } from "@/service/category.service";
 import { DiscountService } from "@/service/discount.service";
+import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
-import { toast } from 'sonner'
+import { toast } from "sonner";
 
 export const DiscountCreate = ({ product }: { product?: IProduct }) => {
     const [newDiscount, setNewDiscount] = useState<INewDiscount | null>(
-        product ? { target: product.id, type: "one" } : null
+        product
+            ? {
+                  target: product.id,
+                  type: "one",
+                  name: `Скидка для ${product.brand.name} ${product.model}`,
+              }
+            : null
     );
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -36,13 +43,30 @@ export const DiscountCreate = ({ product }: { product?: IProduct }) => {
     const [brands, setBrands] = useState<IBrand[]>();
 
     async function getCategoriesBrands() {
+        let isError = false;
         setLoading(true);
-        const categoriesData = await CategoryService.getAll();
-        const brandsData = await BrandService.getAll();
+        const categoriesData = await CategoryService.getAll().catch((e) => {
+            const error = e as AxiosError;
+            if (error.response?.status == 500) {
+                toast("Произошла ошибка на сервере");
+                isError = true;
+                return;
+            }
+        });
+        const brandsData = await BrandService.getAll().catch((e) => {
+            const error = e as AxiosError;
+            if (error.response?.status == 500) {
+                toast("Произошла ошибка на сервере");
+                isError = true;
+                return;
+            }
+        });
 
         setLoading(false);
-        setBrands(brandsData);
-        setCategories(categoriesData);
+        if (!isError) {
+            setBrands(brandsData!);
+            setCategories(categoriesData!);
+        }
     }
 
     async function handleCreate(e: React.SyntheticEvent) {
@@ -54,14 +78,14 @@ export const DiscountCreate = ({ product }: { product?: IProduct }) => {
                 if (data == 404) {
                     toast("Нет товаров для скидки");
                 }
-                localStorage.removeItem("cart")
-                window.location.reload()
+                localStorage.removeItem("cart");
+                window.location.reload();
             }
         } catch (e) {
             console.log(e);
         }
-        
-        setLoading(false)
+
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -147,6 +171,7 @@ export const DiscountCreate = ({ product }: { product?: IProduct }) => {
                                         <div className="">
                                             <Label>Категория скидки</Label>
                                             <Select
+                                                required
                                                 onValueChange={(
                                                     value: DiscountTypes
                                                 ) => {
@@ -182,6 +207,11 @@ export const DiscountCreate = ({ product }: { product?: IProduct }) => {
                                     <Label>Название</Label>
                                     <Input
                                         type="text"
+                                        defaultValue={
+                                            product
+                                                ? `Скидка для ${product.brand.name} ${product.model}`
+                                                : ""
+                                        }
                                         onChange={(e) => {
                                             setNewDiscount({
                                                 ...newDiscount,

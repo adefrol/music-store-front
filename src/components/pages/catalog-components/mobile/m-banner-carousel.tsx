@@ -1,17 +1,11 @@
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "@/components/ui/carousel";
-import { IBanner } from "@/interfaces/banner.interface";
-import { API_URL } from "@/lib/api_url";
-import { BannerService } from "@/service/banner.service";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { IBanner } from '@/interfaces/banner.interface'
+import { API_URL } from '@/lib/api_url'
+import { BannerService } from '@/service/banner.service'
 import { useEffect, useState } from "react";
 import Autoplay from "embla-carousel-autoplay"
 
-export const BannerCarousel = () => {
+export const MBannerCarousel = () => {
     const [banners, setBanners] = useState<IBanner[]>();
 
     async function getAllBanners() {
@@ -30,24 +24,27 @@ export const BannerCarousel = () => {
 
     return (
         <Carousel
-            className="w-[1500px] max-sm:w-[700px] pt-20"
+            className="w-[95%] mx-auto pt-20"
             opts={{
                 loop: true,
-            }} plugins={[Autoplay({delay: 5000})]}
+            }}
+            plugins={[Autoplay({ delay: 5000 })]}
         >
             <CarouselContent>
-                <CarouselItem className="h-[700px]">
+                <CarouselItem className="h-[400px]">
                     <div
-                        className="w-full h-full bg-cover flex items-center justify-center rounded-lg flex-col gap-5 select-none"
+                        className="w-full h-full bg-cover flex items-center justify-center rounded-lg flex-col gap-5"
                         style={{
                             backgroundImage: `url(${API_URL}/bg.jpg)`,
                         }}
                     >
-                        <p className="text-white text-7xl font-bold">
+                        <p className="text-white text-5xl font-bold">
                             Music <span className="text-primary">Store</span>
                         </p>
-                        <p className="text-white text-xl text-center w-[500px]">
-                            Добро пожаловать в магазин музыкального оборудования! Здесь каждая нота звучит особенно, а любимая мелодия заводит сердце! Давай вместе погрузимся в мир музыки и создадим что-то по-настоящему удивительное!
+                        <p className="text-white text-xl text-center w-[300px]">
+                            Добро пожаловать в магазин музыкального
+                            оборудования! Здесь каждая нота звучит особенно, а
+                            любимая мелодия заводит сердце!
                         </p>
                     </div>
                 </CarouselItem>
@@ -62,8 +59,7 @@ export const BannerCarousel = () => {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+
         </Carousel>
     );
 };

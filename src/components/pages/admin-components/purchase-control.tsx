@@ -21,6 +21,7 @@ import {
 import { IPurchase, IStatusUpdate } from "@/interfaces/purchase.interface";
 import { PurchaseService } from "@/service/purchase.service";
 import { useState } from "react";
+import { toast } from 'sonner'
 
 export const PurchaseControl = ({
     purchases,
@@ -32,8 +33,11 @@ export const PurchaseControl = ({
 
     async function updateStatus() {
         if (statusUpdate) {
-            await PurchaseService.updateStatus(statusUpdate);
+            await PurchaseService.updateStatus(statusUpdate).catch();
             window.location.reload()
+        }
+        else {
+            toast("Статус не изменен, изменения не вступили в силу")
         }
     }
 

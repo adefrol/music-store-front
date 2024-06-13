@@ -1,4 +1,4 @@
-import { Loading } from '@/components/loading'
+import { Loading } from "@/components/loading";
 import { ParamsForm } from "@/components/params-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +28,9 @@ import { IProduct, IProductCreate } from "@/interfaces/product.interface";
 import { subcategories } from "@/lib/extra-values";
 import { CategoryService } from "@/service/category.service";
 import { ProductService } from "@/service/product.service";
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export const ProductCreate = ({
     forEdit,
@@ -97,16 +99,33 @@ export const ProductCreate = ({
 
     async function handleCreate(e: React.BaseSyntheticEvent) {
         e.preventDefault();
-        setLoading(true)
-        if (newProduct && !product) {
+        let isError = false;
+        setLoading(true);
+        if (!product) {
             if (newProduct && file != undefined) {
                 await ProductService.create(
                     newProduct as IProductCreate,
                     "products",
                     file
-                );
+                ).catch((e) => {
+                    const error = e as AxiosError;
+                    if (error.response?.status == 500) {
+                        toast("Произошла ошибка на сервере");
+                        isError = true;
+                        return;
+                    }
+                });
             } else {
-                await ProductService.create(newProduct as IProductCreate);
+                await ProductService.create(newProduct as IProductCreate).catch(
+                    (e) => {
+                        const error = e as AxiosError;
+                        if (error.response?.status == 500) {
+                            toast("Произошла ошибка на сервере");
+                            isError = true;
+                            return;
+                        }
+                    }
+                );
             }
         }
         if (productUpdate && product) {
@@ -116,17 +135,34 @@ export const ProductCreate = ({
                     productUpdate as IProductCreate,
                     "products",
                     file
-                );
+                ).catch((e) => {
+                    const error = e as AxiosError;
+                    if (error.response?.status == 500) {
+                        toast("Произошла ошибка на сервере");
+                        isError = true;
+                        return;
+                    }
+                });
             } else {
                 await ProductService.update(
                     product.id,
                     productUpdate as IProductCreate
-                );
+                ).catch((e) => {
+                    const error = e as AxiosError;
+                    if (error.response?.status == 500) {
+                        toast("Произошла ошибка на сервере");
+                        isError = true;
+                        return;
+                    }
+                });
             }
         }
-        localStorage.removeItem("cart")
-        setLoading(false)
-        window.location.reload();
+
+        setLoading(false);
+        if (!isError) {
+            localStorage.removeItem("cart");
+            window.location.reload();
+        }
     }
 
     function handleChange(value: string | number, key: string) {
@@ -137,7 +173,7 @@ export const ProductCreate = ({
         }
     }
 
-    if(loading) return <Loading/>
+    if (loading) return <Loading />;
 
     return (
         <div>
@@ -156,6 +192,7 @@ export const ProductCreate = ({
                                 <div className="">
                                     <Label>Категория</Label>
                                     <Select
+                                        required
                                         defaultValue={
                                             product
                                                 ? product.category.id.toString()
@@ -194,6 +231,7 @@ export const ProductCreate = ({
                                 <div className="">
                                     <Label>Бренд</Label>
                                     <Select
+                                        required
                                         defaultValue={
                                             product
                                                 ? product.brand.id.toString()
@@ -262,6 +300,9 @@ export const ProductCreate = ({
                                 <div className="">
                                     <Label>Модель</Label>
                                     <Input
+                                        type="text"
+                                        maxLength={33}
+                                        required
                                         defaultValue={
                                             product ? product.model : undefined
                                         }
@@ -293,6 +334,7 @@ export const ProductCreate = ({
                                 <div className="">
                                     <Label>Описание</Label>
                                     <Textarea
+                                        required
                                         defaultValue={
                                             product
                                                 ? product.description

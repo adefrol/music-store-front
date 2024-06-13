@@ -10,7 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { INewBanner } from "@/interfaces/banner.interface";
 import { BannerService } from "@/service/banner.service";
+import { AxiosError } from "axios";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const BannerCreate = () => {
     const [file, setFile] = useState<File>();
@@ -25,8 +27,20 @@ export const BannerCreate = () => {
         setLoading(true);
         try {
             if (newBanner && file) {
-                await BannerService.create(newBanner, "banners", file);
-                window.location.reload();
+                let isError = false;
+                await BannerService.create(newBanner, "banners", file).catch(
+                    (e) => {
+                        const error = e as AxiosError;
+                        if (error.response?.status == 500) {
+                            toast("Произошла ошибка на сервере");
+                            isError = true;
+                            return;
+                        }
+                    }
+                );
+                if (!isError) {
+                    window.location.reload();
+                }
             }
         } catch (e) {
             console.log(e);

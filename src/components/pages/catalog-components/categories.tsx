@@ -2,6 +2,7 @@ import { API_URL } from "@/lib/api_url";
 import { Route } from "@/routes/index";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const categoriesCards = [
     {
@@ -64,7 +65,8 @@ const drumsCategories = [
 ];
 
 export const Categories = () => {
-    const { category } = Route.useSearch();
+    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+    const { category, subcategory } = Route.useSearch();
     const navigate = useNavigate({ from: Route.fullPath });
 
     const [selectedCategory, setSelectedCategory] = useState<Array<any>>();
@@ -88,58 +90,119 @@ export const Categories = () => {
         selectCategory();
     }, [category]);
 
-    return (
-        <>
-            <div className="flex flex-col justify-center gap-5">
-                <div className="grid grid-cols-3 font-medium">
-                    {categoriesCards.map((category) => (
-                        <div
-                            key={category.name}
-                            className="w-[90%] hover:scale-105 active:scale-100 transition-all cursor-pointer mx-auto rounded-lg relative h-[245px] bg-cover"
-                            style={{
-                                backgroundImage: `url(${API_URL}/${category.image})`,
-                            }}
-                            onClick={() =>
-                                navigate({
-                                    search: (prev) => ({
-                                        ...prev,
-                                        category: category.name,
-                                        subcategory: undefined
-                                    }),
-                                })
-                            }
-                        >
-                            <p className="text-white absolute left-0 bottom-0 p-5  text-5xl">
-                                {category.name}
-                            </p>
-                        </div>
-                    ))}
+    if (isTabletOrMobile) {
+        return (
+            <>
+                <div className="flex flex-col justify-center gap-2 py-20">
+                    <div className="grid grid-cols-3 font-medium">
+                        {categoriesCards.map((category) => (
+                            <div
+                                key={category.name}
+                                className="w-[95%] hover:scale-105 active:scale-100 transition-all cursor-pointer mx-auto rounded-lg relative h-[150px] bg-cover"
+                                style={{
+                                    backgroundImage: `url(${API_URL}/${category.image})`,
+                                }}
+                                onClick={() =>
+                                    navigate({
+                                        search: (prev) => ({
+                                            ...prev,
+                                            category: category.name,
+                                            subcategory: undefined,
+                                        }),
+                                    })
+                                }
+                            >
+                                <p className="text-white absolute left-0 bottom-0 p-2  text-xl">
+                                    {category.name}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="grid grid-cols-3 font-medium">
+                        {selectedCategory?.map((category) => (
+                            <div
+                                key={category.name}
+                                className="w-[95%] hover:scale-105 active:scale-100 transition-all cursor-pointer mx-auto rounded-lg relative h-[145px] bg-cover"
+                                style={{
+                                    backgroundImage: `url(${API_URL}/${category.image})`,
+                                }}
+                                onClick={() =>
+                                    navigate({
+                                        search: (prev) => ({
+                                            ...prev,
+                                            subcategory: category.name,
+                                        }),
+                                    })
+                                }
+                            >
+                                <p className="text-white absolute left-0 bottom-0 p-2  text-xl">
+                                    {category.name}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <div className="grid grid-cols-3 font-medium">
-                    {selectedCategory?.map((category) => (
-                        <div
-                            key={category.name}
-                            className="w-[90%] hover:scale-105 active:scale-100 transition-all cursor-pointer mx-auto rounded-lg relative h-[245px] bg-cover"
-                            style={{
-                                backgroundImage: `url(${API_URL}/${category.image})`,
-                            }}
-                            onClick={() =>
-                                navigate({
-                                    search: (prev) => ({
-                                        ...prev,
-                                        subcategory: category.name,
-                                    }),
-                                })
-                            }
-                        >
-                            <p className="text-white absolute left-0 bottom-0 p-5  text-5xl">
-                                {category.name}
-                            </p>
-                        </div>
-                    ))}
+            </>
+        );
+    } else
+        return (
+            <>
+                <div className="flex flex-col justify-center gap-5 py-40">
+                    <h1 className="text-center text-5xl font-extrabold">
+                        Категории
+                    </h1>
+                    <div className="grid grid-cols-3 font-medium">
+                        {categoriesCards.map((category) => (
+                            <div
+                                key={category.name}
+                                className="w-[90%] hover:scale-105 active:scale-100 transition-all cursor-pointer mx-auto rounded-lg relative h-[245px] bg-cover"
+                                style={{
+                                    backgroundImage: `url(${API_URL}/${category.image})`,
+                                }}
+                                onClick={() =>
+                                    navigate({
+                                        search: (prev) => ({
+                                            ...prev,
+                                            category: category.name,
+                                            subcategory: undefined,
+                                        }),
+                                    })
+                                }
+                            >
+                                <p className="text-white absolute left-0 bottom-0 p-5  text-5xl">
+                                    {category.name}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="grid grid-cols-3 font-medium">
+                        {selectedCategory?.map((category) => (
+                            <div
+                                key={category.name}
+                                className="w-[90%] hover:scale-105 active:scale-100 transition-all cursor-pointer mx-auto rounded-lg relative h-[245px] bg-cover"
+                                style={{
+                                    backgroundImage: `url(${API_URL}/${category.image})`,
+                                }}
+                                onClick={() =>
+                                    navigate({
+                                        search: (prev) => ({
+                                            ...prev,
+                                            subcategory: category.name,
+                                        }),
+                                    })
+                                }
+                            >
+                                <p className="text-white absolute left-0 bottom-0 p-5  text-5xl">
+                                    {category.name}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                    {!category ? <p className='text-center text-xl text-gray-500 font-bold'>Выберите категорию</p> : <></>}
+                    {!subcategory && category ? <p className='text-center text-xl text-gray-500 font-bold'>Выберите подкатегорию</p> : <></>}
                 </div>
-            </div>
-            {/*             <div className="grid grid-cols-2 pt-5 font-medium">
+
+                {/*             <div className="grid grid-cols-2 pt-5 font-medium">
                 <div
                     className="w-[95%] mx-auto rounded-lg relative h-[245px] bg-cover bg-center"
                     style={{
@@ -161,6 +224,6 @@ export const Categories = () => {
                     </p>
                 </div>
             </div> */}
-        </>
-    );
+            </>
+        );
 };

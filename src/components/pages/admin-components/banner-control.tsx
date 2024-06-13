@@ -25,11 +25,23 @@ import { IBanner } from "@/interfaces/banner.interface";
 import { API_URL } from "@/lib/api_url";
 import { BannerService } from "@/service/banner.service";
 import { BannerCreate } from "./banner-create";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export const BannerControl = ({ banners }: { banners: IBanner[] | null }) => {
     async function deleteBanner(id: number) {
-        await BannerService.delete(id);
-        window.location.reload();
+        let isError = false;
+        await BannerService.delete(id).catch((e) => {
+            const error = e as AxiosError;
+            if (error.response?.status == 500) {
+                toast("Произошла ошибка на сервере");
+                isError = true;
+                return;
+            }
+        });
+        if (!isError) {
+            window.location.reload();
+        }
     }
 
     return (
@@ -82,7 +94,13 @@ export const BannerControl = ({ banners }: { banners: IBanner[] | null }) => {
                                     ></div>
                                 </TableCell>
                                 <TableCell className="text-center">
-                                    {new Date(banner.expired_at).toLocaleDateString() + " " + new Date(banner.expired_at).toLocaleTimeString()}
+                                    {new Date(
+                                        banner.expired_at
+                                    ).toLocaleDateString() +
+                                        " " +
+                                        new Date(
+                                            banner.expired_at
+                                        ).toLocaleTimeString()}
                                 </TableCell>
                                 <TableCell className="text-center">
                                     <AlertDialog>

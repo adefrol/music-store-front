@@ -35,7 +35,7 @@ export const ProductService = {
 
     async update(
         id: number,
-        orderData: IProductCreate,
+        productData: IProductCreate,
         folder?: string,
         file?: File
     ) {
@@ -45,7 +45,7 @@ export const ProductService = {
         }
         const { data } = await axios.patch(
             `${API_URL}/product/${id}`,
-            JSON.stringify({ ...orderData, image: file ? fileName : "" }),
+            JSON.stringify({ ...productData, image: file ? fileName : productData.image }),
             {
                 headers: {
                     "Content-Type": "application/json",

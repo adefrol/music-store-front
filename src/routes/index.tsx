@@ -1,16 +1,17 @@
-import { Footer } from '@/components/footer'
+import { Footer } from "@/components/footer";
 import { BannerCarousel } from "@/components/pages/catalog-components/banner-carousel";
 import { CatalogGrid } from "@/components/pages/catalog-components/catalog-grid";
 import { Categories } from "@/components/pages/catalog-components/categories";
 import { FilterForm } from "@/components/pages/catalog-components/filter-form";
 import { Header } from "@/components/pages/header";
-
+import { useMediaQuery } from "react-responsive";
 import { ICategory } from "@/interfaces/category.interface";
 import { IProduct } from "@/interfaces/product.interface";
 import { CategoryService } from "@/service/category.service";
 import { ProductService } from "@/service/product.service";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { MBannerCarousel } from "@/components/pages/catalog-components/mobile/m-banner-carousel";
 
 export type ProductSearch = {
     category?: string | string[];
@@ -51,7 +52,7 @@ export const Route = createFileRoute("/")({
             diameter: search.diameter as string | string[],
             color: search.color as string | string[],
             type: search.type as string | string[],
-            search: search.serach as string,
+            search: search.search as string,
             max: search.max as number,
             brand: search.brand as string,
         };
@@ -60,6 +61,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
     const [products, setProducts] = useState<IProduct[]>();
     const [categories, setCategories] = useState<ICategory[]>();
 
@@ -75,12 +78,11 @@ function Index() {
                         product.extra_parameters.toString()
                     ),
                 };
-            }
-            else {
+            } else {
                 return {
                     ...product,
-                    extra_parameters: {}
-                }
+                    extra_parameters: {},
+                };
             }
         });
         setProducts(parsedData);
@@ -100,13 +102,13 @@ function Index() {
         <>
             <Header />
             <div className="max-w-[1500px] w-full mx-auto relative">
-                <BannerCarousel />
-                <div className="py-40">
+                {isTabletOrMobile ? <MBannerCarousel /> : <BannerCarousel />}
+                <div className="">
                     <Categories />
                 </div>
                 {subcategory ? (
                     <div className="">
-                        <div className="flex justify-between">
+                        <div className="flex justify-center relative">
                             {products ? (
                                 <FilterForm
                                     categories={categories ? categories : null}
@@ -114,7 +116,9 @@ function Index() {
                             ) : (
                                 <></>
                             )}
-                            <div className="w-[62%]">
+                            <div
+                                className={`${isTabletOrMobile ? "w-[100%]" : "w-[62%]"}`}
+                            >
                                 {products ? (
                                     <CatalogGrid
                                         products={products}
@@ -132,7 +136,7 @@ function Index() {
                     <></>
                 )}
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 }

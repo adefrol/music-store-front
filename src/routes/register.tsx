@@ -11,8 +11,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IUser, IUserErrors } from "@/interfaces/user.interface";
 import { UserService } from "@/service/user.service";
+import { InputMask } from "@react-input/mask";
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { AxiosError } from "axios";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/register")({
     component: Register,
@@ -92,13 +95,16 @@ function Register() {
         setErrors({});
         setEmailError("");
         if (validateEmail() && validatePassword()) {
-            const data = await UserService.register(newUser);
+            const data = await UserService.register(newUser).catch((e) => {
+                const error = e as AxiosError;
+                if (error.response?.status == 500) {
+                    toast("Произошла ошибка на сервере");
+                    return;
+                }
+            });
             if (data == 200) {
-                localStorage.setItem("email", newUser.email)
+                localStorage.setItem("email", newUser.email);
                 navigate({ to: "/confirm-email" });
-            }
-            if (data == 409) {
-                console.log("conflict", data);
             }
         } else {
             return;
@@ -156,18 +162,19 @@ function Register() {
                                     />
                                 </div>
                                 <div className="grid gap-2">
-                                    <ValidateInput
-                                        htmlFor="phone"
-                                        name="Номер телефона"
-                                        error={undefined}
-                                        type="tel"
-                                        placeholder="+79999999999"
+                                    <Label>Номер телефона</Label>
+                                    <InputMask
                                         onChange={(e) =>
                                             setNewUser({
                                                 ...newUser,
                                                 phone: e.target.value,
                                             })
                                         }
+                                        type="tel"
+                                        placeholder="+7 (999) 999-99-99"
+                                        mask="+7 (___) ___-__-__"
+                                        replacement={{ _: /\d/ }}
+                                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                                     />
                                 </div>
                                 <div className="grid gap-2">
@@ -195,7 +202,10 @@ function Register() {
                             </div>
                             <div className="mt-4 text-center text-sm">
                                 Уже зарегистрированы?{" "}
-                                <Link to="/login" className="underline text-primary">
+                                <Link
+                                    to="/login"
+                                    className="underline text-primary"
+                                >
                                     Войти
                                 </Link>
                             </div>
