@@ -2,7 +2,6 @@ import { AuthAdmin } from "@/providers/auth";
 import { Link } from "@tanstack/react-router";
 import { ShoppingCart, User } from "lucide-react";
 import { Cart } from "./cart";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { useMediaQuery } from "react-responsive";
 

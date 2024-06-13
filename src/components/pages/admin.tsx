@@ -104,14 +104,14 @@ export function Admin() {
     }
 
     async function getAllDisconts() {
-        let isError = false;
+        
         setLoading(true);
         const data: IDiscount[] | void = await DiscountService.getAll().catch(
             (e) => {
                 const error = e as AxiosError;
                 if (error.response?.status == 500) {
                     toast("Произошла ошибка на сервере");
-                    isError = true;
+                    
                     return;
                 }
             }
