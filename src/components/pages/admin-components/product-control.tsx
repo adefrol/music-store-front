@@ -185,11 +185,13 @@ export const ProductList = ({
                                         <p>
                                             {product.discount
                                                 ? Math.round(
-                                                      Number(product.price) /
-                                                          (product.discount
-                                                              .discount_value /
-                                                              100 +
-                                                              1)
+                                                      Number(product.price) -
+                                                          Number(
+                                                              product.price
+                                                          ) *
+                                                              (product.discount
+                                                                  .discount_value /
+                                                                  100)
                                                   )
                                                 : product.price}{" "}
                                             {"р. "}

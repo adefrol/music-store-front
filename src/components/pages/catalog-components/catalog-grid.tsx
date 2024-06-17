@@ -125,7 +125,6 @@ export const CatalogGrid = ({
         <div
             className={`grid ${isTabletOrMobile ? "grid-cols-1" : "grid-cols-3"} gap-y-5 relative transition-all`}
         >
-            
             {filteredProducts?.map((product) => (
                 <Card
                     key={product.id}
@@ -167,11 +166,11 @@ export const CatalogGrid = ({
                                 ? toCurrency(
                                       Number(
                                           Math.round(
-                                              Number(product.price) /
-                                                  (product.discount
-                                                      .discount_value /
-                                                      100 +
-                                                      1)
+                                              Number(product.price) -
+                                                  Number(product.price) *
+                                                      (product.discount
+                                                          .discount_value /
+                                                          100)
                                           )
                                       )
                                   )

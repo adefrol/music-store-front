@@ -34,7 +34,6 @@ function Checkout() {
     const [cart, setCart] = useState<ICartProduct[]>(CartService.getCart());
 
     const [counterChange, setCounterChange] = useState<number>(0);
-    
 
     useEffect(() => {
         setCart(CartService.getCart());
@@ -49,8 +48,6 @@ function Checkout() {
     const [city, setCity] = useState<string>();
     const [address, setAddress] = useState<string>();
     const [index, setIndex] = useState<string>();
-
-    
 
     function compareAddress(
         city: string | undefined,
@@ -117,11 +114,11 @@ function Checkout() {
                 return (
                     accumulator +
                     Math.round(
-                        (Number(object.product.price) /
-                            (object.product.discount.discount_value / 100 +
-                                1)) *
-                            object.count
-                    )
+                        Number(object.product.price) -
+                            Number(object.product.price) *
+                                (object.product.discount.discount_value / 100)
+                    ) *
+                        object.count
                 );
             } else {
                 return (
@@ -221,20 +218,22 @@ function Checkout() {
                                                             {product.product
                                                                 .discount
                                                                 ? toCurrency(
-                                                                      Number(
-                                                                          Math.round(
+                                                                      Math.round(
+                                                                          Number(
+                                                                              product
+                                                                                  .product
+                                                                                  .price
+                                                                          ) -
                                                                               Number(
                                                                                   product
                                                                                       .product
                                                                                       .price
-                                                                              ) /
+                                                                              ) *
                                                                                   (product
                                                                                       .product
                                                                                       .discount
                                                                                       .discount_value /
-                                                                                      100 +
-                                                                                      1)
-                                                                          )
+                                                                                      100)
                                                                       ) *
                                                                           product.count
                                                                   )
@@ -314,7 +313,6 @@ function Checkout() {
                                         <Label>Город</Label>
                                         <Input
                                             required
-                                            
                                             placeholder="г. Иркутск"
                                             onChange={(e) =>
                                                 setCity(e.target.value)

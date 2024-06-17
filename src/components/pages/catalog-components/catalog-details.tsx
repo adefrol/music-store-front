@@ -82,11 +82,14 @@ export const CatalogDetails = ({ product }: { product: IProduct }) => {
                                                       Math.round(
                                                           Number(
                                                               product.price
-                                                          ) /
-                                                              (product.discount
-                                                                  .discount_value /
-                                                                  100 +
-                                                                  1)
+                                                          ) -
+                                                              Number(
+                                                                  product.price
+                                                              ) *
+                                                                  (product
+                                                                      .discount
+                                                                      .discount_value /
+                                                                      100)
                                                       )
                                                   )
                                               )
@@ -201,11 +204,11 @@ export const CatalogDetails = ({ product }: { product: IProduct }) => {
                                     ? toCurrency(
                                           Number(
                                               Math.round(
-                                                  Number(product.price) /
-                                                      (product.discount
-                                                          .discount_value /
-                                                          100 +
-                                                          1)
+                                                  Number(product.price) -
+                                                      Number(product.price) *
+                                                          (product.discount
+                                                              .discount_value /
+                                                              100)
                                               )
                                           )
                                       )

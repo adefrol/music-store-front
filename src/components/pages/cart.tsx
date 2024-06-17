@@ -45,11 +45,11 @@ export const Cart = () => {
                 return (
                     accumulator +
                     Math.round(
-                        (Number(object.product.price) /
-                            (object.product.discount.discount_value / 100 +
-                                1)) *
-                            object.count
-                    )
+                        Number(object.product.price) -
+                            Number(object.product.price) *
+                                (object.product.discount.discount_value / 100)
+                    ) *
+                        object.count
                 );
             } else {
                 return (
@@ -99,20 +99,21 @@ export const Cart = () => {
                                         <p className="text-sm roboto">
                                             {product.product.discount
                                                 ? toCurrency(
-                                                      Number(
-                                                          Math.round(
+                                                      Math.round(
+                                                          Number(
+                                                              product.product
+                                                                  .price
+                                                          ) -
                                                               Number(
                                                                   product
                                                                       .product
                                                                       .price
-                                                              ) /
+                                                              ) *
                                                                   (product
                                                                       .product
                                                                       .discount
                                                                       .discount_value /
-                                                                      100 +
-                                                                      1)
-                                                          )
+                                                                      100)
                                                       ) * product.count
                                                   )
                                                 : toCurrency(
@@ -174,7 +175,7 @@ export const Cart = () => {
         );
 
     return (
-        <div className='w-[670px]'>
+        <div className="w-[670px]">
             <ScrollArea className="h-[500px] max-w-[1000px]">
                 {cart?.map((product) => (
                     <Card className="p-2 my-4">
@@ -206,18 +207,18 @@ export const Cart = () => {
                                     <p className="text-2xl roboto">
                                         {product.product.discount
                                             ? toCurrency(
-                                                  Number(
-                                                      Math.round(
+                                                  Math.round(
+                                                      Number(
+                                                          product.product.price
+                                                      ) -
                                                           Number(
                                                               product.product
                                                                   .price
-                                                          ) /
+                                                          ) *
                                                               (product.product
                                                                   .discount
                                                                   .discount_value /
-                                                                  100 +
-                                                                  1)
-                                                      )
+                                                                  100)
                                                   ) * product.count
                                               )
                                             : toCurrency(

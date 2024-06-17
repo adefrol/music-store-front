@@ -11,7 +11,7 @@ export const Header = ({ forAdmin }: { forAdmin?: boolean }) => {
     if (isTabletOrMobile)
         return (
             <div className="max-w-[1500px] w-full mx-auto ">
-                <header className=" max-w-[1500px] mx-auto w-full h-[75px] fixed z-10 bg-white">
+                <header className=" max-w-[1500px] mx-auto w-full h-[75px] fixed z-30 bg-white">
                     <div className="flex justify-between items-center h-full px-3">
                         <Link to="/">
                             <div className="text-xl font-bold">

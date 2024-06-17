@@ -40,8 +40,18 @@ export const CartService = {
         if (cart != null) {
             let parsedCart: ICartProduct[] = JSON.parse(cart);
 
-            parsedCart.splice(parsedCart.indexOf(productToRemove), 1);
-            localStorage.setItem("cart", JSON.stringify(parsedCart));
+            let productIndex: number | undefined = undefined;
+            parsedCart.forEach((element, index) => {
+                if (element.product.id == productToRemove.product.id) {
+                    productIndex = index;
+                }
+                return;
+            });
+
+            if (productIndex != undefined) {
+                parsedCart.splice(productIndex, 1);
+                localStorage.setItem("cart", JSON.stringify(parsedCart));
+            }
         }
     },
 
